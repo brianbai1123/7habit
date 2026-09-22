@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f3efe6;
+  --foreground: #1c1916;
+  --pine: #1b4332;
+  --pine-soft: #e7f0ea;
+  --clay: #9a4e32;
+  --band: #efe4d2;
+  --line: #e0d5c4;
+  --muted: #5c554c;
+  --paper: #f7f3eb;
+  --ink: #1c1916;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-pine: var(--pine);
+  --color-pine-soft: var(--pine-soft);
+  --color-clay: var(--clay);
+  --color-band: var(--band);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --font-sans: var(--font-sans), "PingFang SC", "Noto Sans SC", "Microsoft YaHei",
+    "WenQuanYi Micro Hei", sans-serif;
+  --font-serif: var(--font-serif), "Songti SC", "Noto Serif SC", "Source Han Serif SC",
+    serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.85;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+::selection {
+  background: #d7e6dc;
+}
