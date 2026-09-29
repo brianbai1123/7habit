@@ -25,6 +25,12 @@ export type EssenceBlock = {
   };
 };
 
+export type ChainLink = {
+  via?: string;
+  claim: string;
+  detail: string;
+};
+
 export type Chapter = {
   slug: string;
   group: "读之前" | "原书的地基" | "个人的胜利" | "公众的胜利" | "更新与收束";
@@ -40,7 +46,8 @@ export type Chapter = {
   plain: {
     understand: string;
     core: string;
-    logic: string[];
+    chain: ChainLink[];
+    breaks: string[];
     scenes: { title: string; body: string }[];
     checks: { question: string; answer: string }[];
   };
