@@ -140,3 +140,25 @@ test("layout runs the theme bootstrap inline before the body hydrates", () => {
   assert.ok(script !== -1, "layout must contain the inline theme bootstrap");
   assert.ok(script < body, "theme bootstrap must run before the body");
 });
+
+test("reading room matches the home typography and theme contract", () => {
+  const layout = readFileSync(new URL("../src/app/layout.tsx", import.meta.url), "utf8");
+  const css = readFileSync(new URL("../src/app/globals.css", import.meta.url), "utf8");
+  const shell = readFileSync(
+    new URL("../src/components/reading-shell.tsx", import.meta.url),
+    "utf8",
+  );
+  const chapter = readFileSync(
+    new URL("../src/components/chapter-view.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(layout, /Cormorant_Garamond/);
+  assert.match(layout, /lxgw-wenkai-screen-web/);
+  assert.match(css, /data-theme="celadon"/);
+  assert.match(css, /data-theme="night"/);
+  assert.match(css, /\.font-kai/);
+  assert.match(css, /\.font-num/);
+  assert.match(shell, /ThemeSwitcher/);
+  assert.match(chapter, /font-num/);
+});

@@ -40,14 +40,17 @@ export function ThemeSwitcher() {
   }
 
   return (
-    <div aria-label="阅读主题" className="fixed top-3 right-3 z-50 flex gap-1 rounded-full border border-line bg-paper p-1 shadow-sm">
+    <div
+      aria-label="阅读主题"
+      className="mt-4 flex w-full gap-1 rounded-full border border-line bg-paper p-1 shadow-sm"
+    >
       {THEMES.map((option) => (
         <button
           key={option.id}
           type="button"
           aria-pressed={theme === option.id}
           onClick={() => selectTheme(option.id)}
-          className="rounded-full px-3 py-1 text-sm text-ink aria-pressed:bg-pine aria-pressed:text-paper"
+          className="flex-1 rounded-full px-3 py-1 text-sm text-ink aria-pressed:bg-pine aria-pressed:text-on-pine"
         >
           {option.label}
         </button>
