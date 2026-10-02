@@ -1,9 +1,9 @@
 export const THEME_KEY = "7habit:theme";
 
 export const THEMES = [
-  { id: "paper", label: "纸白" },
-  { id: "celadon", label: "青瓷" },
-  { id: "night", label: "夜读" },
+  { id: "paper", name: "宣纸", swatch: ["#f3efe6", "#1c3d36"] },
+  { id: "celadon", name: "青瓷", swatch: ["#e5ede9", "#1d4a5c"] },
+  { id: "night", name: "夜读", swatch: ["#161412", "#8fc7b0"] },
 ] as const;
 
 export type ThemeId = (typeof THEMES)[number]["id"];

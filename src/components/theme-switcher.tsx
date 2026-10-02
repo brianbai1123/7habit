@@ -41,18 +41,31 @@ export function ThemeSwitcher() {
 
   return (
     <div
-      aria-label="阅读主题"
-      className="mt-4 flex w-full gap-1 rounded-full border border-line bg-paper p-1 shadow-sm"
+      role="radiogroup"
+      aria-label="主题颜色"
+      className="mt-4 inline-flex w-full rounded-full border border-line bg-paper p-1"
     >
       {THEMES.map((option) => (
         <button
           key={option.id}
           type="button"
-          aria-pressed={theme === option.id}
+          role="radio"
+          aria-checked={theme === option.id}
           onClick={() => selectTheme(option.id)}
-          className="flex-1 rounded-full px-3 py-1 text-sm text-ink aria-pressed:bg-pine aria-pressed:text-on-pine"
+          className={`flex flex-1 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
+            theme === option.id
+              ? "bg-pine text-on-pine"
+              : "text-muted hover:text-pine"
+          }`}
         >
-          {option.label}
+          <span
+            aria-hidden
+            className="size-3 rounded-full border border-black/10"
+            style={{
+              background: `linear-gradient(135deg, ${option.swatch[0]} 50%, ${option.swatch[1]} 50%)`,
+            }}
+          />
+          {option.name}
         </button>
       ))}
     </div>

@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import { chapters, chapterGroups, GROUP_ORDER } from "../src/content/book.ts";
 import {
   resolveTheme,
+  THEMES,
   THEME_BOOTSTRAP_SCRIPT,
   THEME_KEY,
 } from "../src/lib/theme.ts";
@@ -161,4 +162,29 @@ test("reading room matches the home typography and theme contract", () => {
   assert.match(css, /\.font-num/);
   assert.match(shell, /ThemeSwitcher/);
   assert.match(chapter, /font-num/);
+});
+
+test("theme choices match the home labels and two-color swatches", () => {
+  assert.deepEqual(THEMES, [
+    { id: "paper", name: "宣纸", swatch: ["#f3efe6", "#1c3d36"] },
+    { id: "celadon", name: "青瓷", swatch: ["#e5ede9", "#1d4a5c"] },
+    { id: "night", name: "夜读", swatch: ["#161412", "#8fc7b0"] },
+  ]);
+});
+
+test("theme switcher matches the home radio and swatch contract", () => {
+  const source = readFileSync(
+    new URL("../src/components/theme-switcher.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(source, /role="radiogroup"/);
+  assert.match(source, /aria-label="主题颜色"/);
+  assert.match(source, /role="radio"/);
+  assert.match(source, /aria-checked=/);
+  assert.match(source, /linear-gradient\(135deg, \$\{[^}]+\.swatch\[0\]\} 50%, \$\{[^}]+\.swatch\[1\]\} 50%\)/);
+  assert.match(source, /size-3 rounded-full border border-black\/10/);
+  assert.match(source, /items-center gap-1\.5 rounded-full px-3 py-1 text-xs font-semibold transition-colors/);
+  assert.match(source, /bg-pine text-on-pine/);
+  assert.match(source, /text-muted hover:text-pine/);
 });
