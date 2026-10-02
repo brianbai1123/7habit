@@ -2,6 +2,11 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFileSync } from "node:fs";
 import { chapters, chapterGroups, GROUP_ORDER } from "../src/content/book.ts";
+import {
+  resolveTheme,
+  THEME_BOOTSTRAP_SCRIPT,
+  THEME_KEY,
+} from "../src/lib/theme.ts";
 
 const HABITS = [
   "积极主动",
@@ -101,4 +106,37 @@ test("the page shows the five-step method in order", () => {
     assert.ok(at > cursor, label);
     cursor = at;
   }
+});
+
+test("theme resolution gives a valid query priority over stored state", () => {
+  assert.equal(resolveTheme("night", "paper"), "night");
+});
+
+test("theme resolution uses valid stored state without a query", () => {
+  assert.equal(resolveTheme(null, "celadon"), "celadon");
+});
+
+test("theme resolution falls back from an invalid query to valid stored state", () => {
+  assert.equal(resolveTheme("invalid", "night"), "night");
+});
+
+test("theme resolution defaults to paper when no candidate is valid", () => {
+  assert.equal(resolveTheme(null, "invalid"), "paper");
+});
+
+test("theme state is independent from the principles reader", () => {
+  assert.equal(THEME_KEY, "7habit:theme");
+  assert.ok(!THEME_BOOTSTRAP_SCRIPT.includes("principles:theme"));
+});
+
+test("layout runs the theme bootstrap inline before the body hydrates", () => {
+  const source = readFileSync(new URL("../src/app/layout.tsx", import.meta.url), "utf8");
+  const script = source.indexOf(
+    '<script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />',
+  );
+  const body = source.indexOf("<body");
+
+  assert.match(source, /<html[^>]*suppressHydrationWarning/);
+  assert.ok(script !== -1, "layout must contain the inline theme bootstrap");
+  assert.ok(script < body, "theme bootstrap must run before the body");
 });

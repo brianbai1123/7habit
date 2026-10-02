@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_SC, Noto_Serif_SC } from "next/font/google";
+import { ThemeSwitcher } from "@/components/theme-switcher";
+import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
 const sans = Noto_Sans_SC({
@@ -29,8 +31,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="zh-CN" className={`${sans.variable} ${serif.variable} h-full antialiased`}>
-      <body className="min-h-full">{children}        <script src="/reading-room.js?v=2" defer></script>
+    <html
+      lang="zh-CN"
+      className={`${sans.variable} ${serif.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
+      </head>
+      <body className="min-h-full">
+        <ThemeSwitcher />
+        {children}
+        <script src="/reading-room.js?v=2" defer></script>
       </body>
     </html>
   );
